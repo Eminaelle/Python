@@ -3,16 +3,16 @@ import string
 def main():
     print("Password Generator")
     
-    # Ask the user what does he want
+    # Ask the user what longueur does he want
     width = get_width()
     
-    # Does the password contain numbers ?
+    # Does the password contain numbers ? return boolean
     number = include("numbers")
 
-    # Does the password contain special characters ?
+    # Does the password contain special characters ? return boolean
     special = include("special characters")
    
-    # Generate the password
+    # Generate the password + return boolean 
     password,ok = generate(width, number, special)
    
     # Generate the password again if it is not according the user's choice
