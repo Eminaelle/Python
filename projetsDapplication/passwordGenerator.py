@@ -7,10 +7,10 @@ def main():
     width = get_width()
     
     # Does the password contain numbers ? return boolean
-    number = include("numbers")
+    number = get_is_include("Do you want number ? Y/N : ")
 
     # Does the password contain special characters ? return boolean
-    special = include("special characters")
+    special = get_is_include("Do you want special characters ? Y/N : ")
    
     # Generate the password + return boolean 
     password,ok = generate(width, number, special)
@@ -26,18 +26,20 @@ def get_width():
     while True:
         try:
             width = int(input("How long do you want it ? (min 8 / max 64) "))
+        except ValueError:
+            print("The value is incorrect. Please enter a number between 8 and 64")
+        else:
             if 8 <= width <= 64:
                 return width
             else:
                 print("The value is incorrect. Please enter a number between 8 and 64")
-        except ValueError:
-            print("The value is incorrect. Please retry")
+
 
     
     
-def include(data):
+def get_is_include(prompt):
     while True:
-        user_input = input(f"Do you want {data} ? Y/N : " )
+        user_input = input(prompt)
         if user_input.upper() == "Y":
             return True
         elif user_input.upper() == "N":
