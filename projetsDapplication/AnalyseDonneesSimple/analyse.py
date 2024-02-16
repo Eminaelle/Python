@@ -21,6 +21,8 @@
 import csv
 import sys
 
+from sort_heapsort import sort_heapsort
+
 def main():
     # Checking if the numer of arguments are ok
     check_arg(sys.argv)
@@ -33,8 +35,9 @@ def main():
     # Calculation of the average
     average = calculate_average(ages)
     print(f"The average of the age is {average}")
-
-#def sorting_list(list):
+    print(ages)
+    sort_heapsort(ages)
+    print(ages)
 
     
 def calculate_average(list):
