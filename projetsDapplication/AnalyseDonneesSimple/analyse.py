@@ -136,6 +136,10 @@ def data_extraction(people_data):
         except ValueError:
             print("The data under 'Age' aren't integer, please give in arguments a file .csv with Ages")
             sys.exit(1)
+        except KeyError:
+            print("There isn't Age in the key of the data file")
+            sys.exit(1)
+
     return data
 
 def check_arg(argv):
@@ -167,4 +171,6 @@ def read_csv(file_path):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         sys.exit(1)
-main()
+
+if __name__ == "__main__":
+    main()
