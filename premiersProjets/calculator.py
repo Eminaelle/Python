@@ -1,11 +1,12 @@
 def main():
     x = float(input("What's x? "))
-    y = float(input("What's y? "))
+    #y = float(input("What's y? "))
 
-    z = round(x+y)
-    print(f"{z:,}")
+    print("x square is", square(x))
+    #print(f"{z:,}")
 
 def square(n):
-    return pow(n,2)
+    return n * n
 
-main()
+if __name__ == "__main__":
+    main()
