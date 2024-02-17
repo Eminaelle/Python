@@ -30,17 +30,59 @@ def main():
     person_data = read_csv(sys.argv[1])
     # Extraction of the age data to put them in a list 
     ages = data_extraction(person_data)
-    for number in ages:
-        print(number, end=' ')   
     # Calculation of the average
+    print(f"the ages are :{ages}")
     average = calculate_average(ages)
     print(f"The average of the age is {average}")
-    print(ages)
-    sort_heapsort(ages)
-    print(ages)
+    # Calculation of the median
+    median = calculate_median(ages)
+    print(f"The median of the age is {median}")
+    # Calculation of the mode
+    mode = calculate_mode(ages)
+    if not mode:
+        print("There isn't a mode")
+    else:
+        print(f"The age(s) the more frequent(s) is {mode}")
 
+def calculate_mode(list):
+    frequence={}
+    # Calculation of the frequence of each element of the list
+    for element in list:
+        if element in frequence:
+            frequence[element] = int(frequence[element]) + 1
+        else:
+            frequence[element] = 1
+        
+    # Finding the element with the max frequence
+    max_val = 0
+    max_element = []
+    for element in frequence:
+        # If the element has the highest frequence the list is cleared and the element is added
+        if frequence[element] > max_val:
+            max_val = frequence[element]
+            max_element = [element]
+        # If the element has the same frequence of another we add it in the list
+        elif frequence[element] == max_val:
+            max_element.append(element)
+    # Verification of the existance of a mode, 
+    # if all the elements have the same frequence there is no mode
+    if len(frequence) == len(max_element):
+        return None
+    else:
+        return max_element  
+
+def calculate_median(list):
+    # Tri de la liste avec la fonction sort_heapsort qui modifie une liste et ne renvoie rien.
+    sort_heapsort(list)
+    if len(list) % 2 == 0:
+        # If the list is even the median is egal of the average of the 2 central value
+        return (list[len(list)//2-1] + list[len(list)//2]) / 2
+    else:
+        # If the list is odd the median is egal of the central value
+        return list[len(list) // 2 ]
     
 def calculate_average(list):
+    # Return the average of a list
     i = 0
     total = 0
     for element in list:
@@ -52,9 +94,10 @@ def calculate_average(list):
         print("The data are empty")
         sys.exit()
 
-def data_extraction(list):
+def data_extraction(Dict):
+    # Take a dictionnary with an "Age" key and return a list with the ages
     data = []
-    for person in list:
+    for person in Dict:
         try:
             data.append(int(person['Age']))
         except ValueError:
@@ -64,10 +107,11 @@ def data_extraction(list):
 
 def check_arg(argv):
     if len(argv) != 2:
-        print("Put name the name file in arguments")
+        print("Put the name of the data file in arguments")
         sys.exit()
 
 def read_csv(arg_file):
+    # Take a file and return a List of Dictionary
     with open(arg_file, 'r') as file:
         data = []
         for row in csv.DictReader(file):

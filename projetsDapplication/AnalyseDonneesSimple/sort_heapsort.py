@@ -1,8 +1,11 @@
+import sys
+
 def sort_heapsort(list):
     try:
         list_lenght = len(list)
     except TypeError:
         print("The list to sort is empty or doesn't exist")
+        sys.exit()
 
     # Les Noeuds sans les feuilles (nombre d'éléments/2 -1) de la plus grande jusqu'à 0
     for i in range(list_lenght // 2 - 1, -1, -1):
