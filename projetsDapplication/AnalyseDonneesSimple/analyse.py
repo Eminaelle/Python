@@ -112,11 +112,13 @@ def calculate_average(age_list):
     float: The average age. If the list is empty, the function exits the program.
     """
     
-    if age_list:
-        return sum(age_list) / len(age_list)
-    else:
-        print("The data are empty")
-        sys.exit()
+    if not age_list:  # Check if the list is empty
+        raise ValueError("The data are empty")
+    try:
+        average = sum(age_list) / len(age_list)
+        return average
+    except TypeError:  # Catch errors if age_list contains non-numeric values
+        raise TypeError("Non-numeric value found")
 
 
 def data_extraction(people_data):
