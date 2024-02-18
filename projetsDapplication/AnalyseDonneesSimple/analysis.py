@@ -1,27 +1,28 @@
-#Pour le projet concernant les structures de données, je vous propose de créer un script Python pour l'Analyse de données simple en utilisant un fichier CSV. Ce projet vous permettra de pratiquer avec les listes et les dictionnaires, en mettant l'accent sur la lecture de données, leur traitement, et quelques statistiques de base.
-#Objectifs du Projet
+"""
+Pour le projet concernant les structures de données, je vous propose de créer un script Python pour l'Analyse de données simple en utilisant un fichier CSV. Ce projet vous permettra de pratiquer avec les listes et les dictionnaires, en mettant l'accent sur la lecture de données, leur traitement, et quelques statistiques de base.
+Objectifs du Projet
 
-#Le but est de lire des données depuis un fichier CSV, de les stocker dans une structure de données appropriée, puis de calculer et afficher des statistiques simples telles que la moyenne, la médiane, et le mode d'une série de nombres.
-#Données
+Le but est de lire des données depuis un fichier CSV, de les stocker dans une structure de données appropriée, puis de calculer et afficher des statistiques simples telles que la moyenne, la médiane, et le mode d'une série de nombres.
+Données
 
-#Supposons que vous ayez un fichier CSV nommé data.csv contenant les résultats d'une enquête sur l'âge des participants. 
+Supposons que vous ayez un fichier CSV nommé data.csv contenant les résultats d'une enquête sur l'âge des participants. 
 
 
-#Étapes Suggérées
+Étapes Suggérées
 
-#Lecture du fichier CSV : Commencez par écrire une fonction pour lire les données depuis le fichier CSV et les stocker dans une structure de données, par exemple, une liste de dictionnaires où chaque dictionnaire représente une ligne du fichier (à l'exception de la ligne d'en-tête).
+Lecture du fichier CSV : Commencez par écrire une fonction pour lire les données depuis le fichier CSV et les stocker dans une structure de données, par exemple, une liste de dictionnaires où chaque dictionnaire représente une ligne du fichier (à l'exception de la ligne d'en-tête).
 
-#Calcul des statistiques :
-#  Moyenne : Calculez l'âge moyen des participants.
-#  Médiane : Trouvez l'âge médian. Vous devrez peut-être trier la liste des âges pour cela.
-#  Mode : Déterminez l'âge le plus fréquent parmi les participants.
+Calcul des statistiques :
+  Moyenne : Calculez l'âge moyen des participants.
+  Médiane : Trouvez l'âge médian. Vous devrez peut-être trier la liste des âges pour cela.
+  Mode : Déterminez l'âge le plus fréquent parmi les participants.
 
-#Affichage des résultats : Affichez les statistiques calculées de manière lisible pour l'utilisateur.
-
+Affichage des résultats : Affichez les statistiques calculées de manière lisible pour l'utilisateur.
+"""
 import csv
 import sys
-
-from sort_heapsort import sort_heapsort
+sys.path.append('E:/Stockages/Projets_info/Python/projetsDapplication')
+from Tri.sort_heapsort import sort_heapsort
 
 def main():
     # Checking if the numer of arguments are ok
@@ -95,7 +96,7 @@ def calculate_median(age_list):
     if not age_list:  # Check if the list is empty
         raise ValueError("The data are empty")
     
-    # Tri de la liste avec la fonction sort_heapsort qui modifie une liste et ne renvoie rien.
+    # Tri de la liste avec la fonction sort qui modifie une liste et ne renvoie rien.
     sort_heapsort(age_list)
     
     if len(age_list) % 2 == 0:
