@@ -92,14 +92,25 @@ def calculate_median(age_list):
     Returns:
     float or int: The median age. If age_list has an even number of elements, returns the average of the two central elements.
     """
+    if not age_list:  # Check if the list is empty
+        raise ValueError("The data are empty")
+    
     # Tri de la liste avec la fonction sort_heapsort qui modifie une liste et ne renvoie rien.
     sort_heapsort(age_list)
+    
     if len(age_list) % 2 == 0:
         # If the list is even the median is egal of the average of the 2 central value
-        return (age_list[len(age_list)//2-1] + age_list[len(age_list)//2]) / 2
+        try:
+            return (age_list[len(age_list)//2-1] + age_list[len(age_list)//2]) / 2
+        except TypeError:
+            raise TypeError("Non-numeric value found")
     else:
         # If the list is odd the median is egal of the central value
-        return age_list[len(age_list) // 2 ]
+        try:
+            return age_list[len(age_list) // 2 ]
+        except TypeError:
+            raise TypeError("Non-numeric value found")
+        
 
 def calculate_average(age_list):
     """
