@@ -10,9 +10,9 @@ if [ -d "$DATA_FOLDER" ]; then
     
     # Itérez sur chaque fichier .csv trouvé
     for FILE in $CSV_FILES; do
-        echo "Exécution d'analyse.py sur $FILE..."
+        echo "Exécution d'analysis.py sur $FILE..."
         # Exécutez analyse.py en passant le chemin du fichier .csv comme argument
-        python analyse.py "$FILE"
+        python analysis.py "$FILE"
         echo "Traitement terminé pour $FILE"
     done
 else

@@ -1,3 +1,4 @@
+
 names = []
 
 with open("name.txt") as file:
