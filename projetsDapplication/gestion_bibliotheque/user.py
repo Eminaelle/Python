@@ -58,7 +58,7 @@ class User:
             raise ValueError("Missing name")
         self._name = name
 
-    def borrow_book(self, library: Library, book : Book= None, book_title: str= "") -> None:
+    def manage_book_circulation(self, operation_type:str, library: Library, book : Book= None, book_title: str= "") -> None:
         """
         Allows the user to borrow a book from the library.
 
@@ -75,48 +75,28 @@ class User:
                 print("The book provided is not valid.")
                 return
             else:
-                if library.book_exit(book):
-                    self.borrowed_books.append(book)
+                if operation_type.lower() == "borrow":
+                    if library.book_exit(book):
+                        self.borrowed_books.append(book)
+                        
+               
+                elif operation_type.lower() == "return":
+                    if library.book_enter(book):
+                        self.borrowed_books.remove(book)
+                        
         elif book_title:
             book = library.find_book_by_title(book_title)
             if isinstance(book, NullBook):
                 print("Book not found")
                 return
             else:
-                if library.book_exit(book):
-                    self.borrowed_books.append(book)
-        else:
-            raise ValueError("Either a book or a book title must be provided.")
-
-    def return_book(self, library: Library, book : Book= None, book_title: str= "") -> None:
-        """
-        Allows the user to return a book to the library.
-
-        @param library: The Library instance to return a book to.
-        @param book: An optional specific Book object to return.
-        @param book_title: An optional title of a book to return.
-        @raise ValueError: If the library is missing or neither a book nor a book title is provided.
-        """
-        if not library:
-            raise ValueError("Missing library")
-        
-        if book is not None:
-            if isinstance(book, NullBook):
-                print("The book provided is not valid.")
-                return
-            else:
-                if library.book_enter(book):
-                    self.borrowed_books.remove(book)
-
-        elif book_title:
-            book = library.find_book_by_title(book_title)
-
-            if isinstance(book, NullBook):
-                print("Book not found")
-                return
-            else:
-                if library.book_enter(book):
-                    self.borrowed_books.remove(book)
-
+                if operation_type.lower() == "borrow":
+                    if library.book_exit(book):
+                        self.borrowed_books.append(book)
+                        
+                elif operation_type.lower() == "return":
+                    if library.book_enter(book):
+                        self.borrowed_books.remove(book)
+                        
         else:
             raise ValueError("Either a book or a book title must be provided.")

@@ -46,7 +46,7 @@ class Library:
         except ValueError:
             raise ValueError(f"{book} does not exist in the library")
 
-    def book_enter(self, book:Book) -> None:
+    def book_enter(self, book:Book) -> bool:
         """
         Processes the return of a book to the library, making it available again.
 
@@ -60,15 +60,14 @@ class Library:
             print("The book does not exist in the library.")
             return False
         
-        if not book.is_available():
+        if book.is_available():
             print(f"{book} has not been borrowed yet")
             return False
         for iter in self.books:
             if iter == book:
                 iter.change_statut()
-                break
-        return True
-        
+                return True
+        return False
 
         
     def book_exit(self, book: Book) -> bool:
@@ -91,8 +90,9 @@ class Library:
         for iter in self.books:
             if iter == book:
                 iter.change_statut()
-                break
-        return True
+                return True
+        return False
+        
         
     
     
