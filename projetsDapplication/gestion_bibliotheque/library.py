@@ -62,25 +62,28 @@ class Library:
             print(f"{book} does not exist in the library.")
 
         
-    def book_exit(self, book: Book) -> None:
+    def book_exit(self, book: Book) -> bool:
         """
         Processes the borrowing of a book from the library, marking it as borrowed.
 
         @param book: The Book object that is being borrowed.
         """
-        if book is None:
-            print("The book does not exist.")
-        elif isinstance(book, NullBook):
-            print("The book provided is not valid.")
-        elif book not in self.books:
+        if book is None or isinstance(book, NullBook):
+            print("The book providied is not valid or does not exist.")
+            return False
+        
+        if book not in self.books:
             print("The book does not exist in the library.")
-        else:
-            if book.is_available():
-                self.delete_book(book)
-                book.statut = "Borrowed"
-                self.add_book(book)
-            else:
-                print(f"{book} is not available and so cannot be borrowed")
+            return False
+        
+        if not book.is_available():
+            print(f"{book} is not available and so cannot be borrowed")
+            return False
+        for iter in self.books:
+            if iter == book:
+                iter.change_statut()
+        return True
+        
     
     
     def add_books(self, book_list: list[dict]):
@@ -107,4 +110,7 @@ class Library:
         for book in self.books:
             if book.title.lower() == title.lower():
                 return book
+        
         return NullBook()
+
+    

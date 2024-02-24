@@ -73,15 +73,18 @@ class User:
         if book is not None:
             if isinstance(book, NullBook):
                 print("The book provided is not valid.")
+                return
             else:
-                library.book_exit(book)
+                if library.book_exit(book):
+                    self.borrowed_books.append(book)
         elif book_title:
             book = library.find_book_by_title(book_title)
             if isinstance(book, NullBook):
                 print("Book not found")
+                return
             else:
-                library.book_exit(book)
-                self.borrowed_books.append(book)
+                if library.book_exit(book):
+                    self.borrowed_books.append(book)
         else:
             raise ValueError("Either a book or a book title must be provided.")
 

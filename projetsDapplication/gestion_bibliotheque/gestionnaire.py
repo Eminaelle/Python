@@ -13,6 +13,7 @@ def main():
     user1 = User.get()
 
     user1.borrow_book(library, book_title="The hobbit")
+    user1.borrow_book(library, book_title="The hobbit")
     user1.borrow_book(library, book_title="War and Peace")
     print(user1)
     user1.return_book(library, book_title="the hobbit")

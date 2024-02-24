@@ -101,6 +101,36 @@ class Book:
             return True
         return False
     
+    def change_statut(self):
+        """
+        Change the statut of a book.
+        """
+        if self.statut == "Available":
+            self.statut = "Borrowed"
+        else:
+            self.statut = "Available"
+
+    def __eq__(self, other) -> bool:
+        """
+        Checks if this book is equal to another book based on their titles and authors.
+
+        Equality is determined by having both the same title and author, ignoring case sensitivity.
+        If the other object is not a Book instance, the comparison will not be performed and
+        NotImplemented is returned.
+
+        @param other: The object to compare with this Book instance.
+        @return: True if both books have the same title and author (case-insensitive), False otherwise.
+                 Returns NotImplemented if 'other' is not a Book instance.
+        """
+        if not isinstance(other, Book):
+            # Return NotImplemented when the comparison is with an unsupported object type.
+            return NotImplemented
+        
+        title = (self.title or "").lower() == (other.title or "").lower()
+        author = (self.author or "").lower() == (other.author or "").lower()
+        
+        return title and author
+
 class NullBook(Book):
     """
     Represents a null object pattern for a Book. Used when a search fails to find a book.
@@ -126,3 +156,5 @@ class NullBook(Book):
         @return: A string message about the non-existence of the book.
         """
         return "This book does not exist."
+    
+    
