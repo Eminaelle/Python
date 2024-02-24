@@ -52,14 +52,23 @@ class Library:
 
         @param book: The Book object that is being returned.
         """
-        if not book.is_available() and book in self.books:
-            self.delete_book(book)
-            book.statut = "Available"
-            self.add_book(book)
-        elif book.is_available():
-            print(f"{book} is available and has not been.")
-        else:
-            print(f"{book} does not exist in the library.")
+        if book is None or isinstance(book, NullBook):
+            print("The book providied is not valid or does not exist.")
+            return False
+        
+        if book not in self.books:
+            print("The book does not exist in the library.")
+            return False
+        
+        if not book.is_available():
+            print(f"{book} has not been borrowed yet")
+            return False
+        for iter in self.books:
+            if iter == book:
+                iter.change_statut()
+                break
+        return True
+        
 
         
     def book_exit(self, book: Book) -> bool:
@@ -82,6 +91,7 @@ class Library:
         for iter in self.books:
             if iter == book:
                 iter.change_statut()
+                break
         return True
         
     
