@@ -46,10 +46,21 @@ class User:
         else:
             raise ValueError("Either a book or a book title must be provided.")
 
-    def return_book(self, book: Book, library: Library) -> None:
-        if book and library:
-            library.book_enter(book)
-        elif not book:
-            raise ValueError("Missing book")
-        else:
+    def return_book(self, library: Library, book : Book= None, book_title: str= "") -> None:
+        if not library:
             raise ValueError("Missing library")
+        
+        if book is not None:
+            if isinstance(book, NullBook):
+                print("The book provided is not valid.")
+            else:
+                library.book_enter(book)
+        elif book_title:
+            book = library.find_book_by_title(book_title)
+            if isinstance(book, NullBook):
+                print("Book not found")
+            else:
+                library.book_enter(book)
+                self.borrowed_books.remove(book)
+        else:
+            raise ValueError("Either a book or a book title must be provided.")
