@@ -74,6 +74,15 @@ class Library:
         @param book: The Book object to remove.
         @raise ValueError: If the book does not exist in the library.
         """
+        if isinstance(book, NullBook) or book is None:
+                print("Book not found.")
+
+        if not book.is_available():
+                    for user in self.users:
+                        if book in user.borrowed_books:
+                            self.manage_book_circulation("return", user, book)
+                            print(f"{book} is being deleted of the library. {user.name} doesn't have to return it.")
+                            break
         try:
             self.books.remove(book)
         except ValueError:

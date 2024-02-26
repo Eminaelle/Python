@@ -38,17 +38,8 @@ def main():
             # Remove a book
             title = input("Title of the book to remove: ")
             book = library.find_book_by_title(title)
-            if isinstance(book, NullBook):
-                print("Book not found.")
-            else:
-                if not book.is_available():
-                    for user in library.users:
-                        if book in user.borrowed_books:
-                            library.manage_book_circulation("return", user, book)
-                            print(f"{book} is being deleted of the library. {user.name} doesn't have to return it.")
-                            break
-                library.delete_book(book)
-                print("Book removed successfully.")
+            library.delete_book(book)
+            print("Book removed successfully.")
 
         elif choice == "3":
             # Borrow a book
@@ -82,7 +73,6 @@ def main():
                 library.add_user(new_user)  
                 user_actif = new_user
                 print("New account created. You can now borrow books")
-            print(library.get_user_list())
         elif choice == "7":
             print(user_actif)
 
