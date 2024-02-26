@@ -4,19 +4,19 @@ class Book:
 
     @ivar title: The title of the book.
     @ivar author: The author of the book.
-    @ivar statut: The current status of the book (default is 'Available').
+    @ivar status: The current status of the book (default is 'Available').
     """
-    def __init__(self, title: str, author: str, statut="Available") -> None:
+    def __init__(self, title: str, author: str, status="Available") -> None:
         """
         Initializes a new Book instance.
 
         @param title: The title of the book.
         @param author: The author of the book.
-        @param statut: The initial status of the book. Defaults to 'Available'.
+        @param status: The initial status of the book. Defaults to 'Available'.
         """
         self.title = title
         self.author = author
-        self.statut = statut
+        self.status = status
     
     def __str__(self) -> str:
         """
@@ -35,8 +35,8 @@ class Book:
         """
         title = input("Title: ").strip().capitalize()
         author = input("Author: ").strip().capitalize()
-        statut = input("Statut: ").strip().lower()
-        return cls(title, author, statut)
+        status = input("Statut: ").strip().lower()
+        return cls(title, author, status)
 
     @property
     def title(self):
@@ -73,23 +73,23 @@ class Book:
         self._author = author.strip().capitalize()
 
     @property
-    def statut(self):
-        """The statut property."""
-        return self._statut
+    def status(self):
+        """The status property."""
+        return self._status
 
-    @statut.setter
-    def statut(self, statut: str):
+    @status.setter
+    def status(self, status: str):
         """
         Sets the status of the book. Validates against 'Available' and 'Borrowed'.
 
-        @param statut: The status of the book.
-        @raise ValueError: If the statut is missing or not valid.
+        @param status: The status of the book.
+        @raise ValueError: If the status is missing or not valid.
         """
-        if not statut:
-            raise ValueError("Missing statut")
-        if statut.strip().capitalize() not in ["Available", "Borrowed"]:
-            raise ValueError("The statut is  not valid, have to be 'Available' or 'Borrowed'")
-        self._statut = statut.strip().capitalize()
+        if not status:
+            raise ValueError("Missing status")
+        if status.strip().capitalize() not in ["Available", "Borrowed"]:
+            raise ValueError("The status is  not valid, have to be 'Available' or 'Borrowed'")
+        self._status = status.strip().capitalize()
 
     def is_available(self) -> bool:
         """
@@ -97,18 +97,18 @@ class Book:
 
         @return: True if the book is available, False otherwise.
         """
-        if self.statut == "Available":
+        if self.status == "Available":
             return True
         return False
     
-    def change_statut(self):
+    def change_status(self):
         """
-        Change the statut of a book.
+        Change the status of a book.
         """
-        if self.statut == "Available":
-            self.statut = "Borrowed"
+        if self.status == "Available":
+            self.status = "Borrowed"
         else:
-            self.statut = "Available"
+            self.status = "Available"
 
     def __eq__(self, other) -> bool:
         """

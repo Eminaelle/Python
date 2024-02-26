@@ -12,11 +12,13 @@ def main():
     #print(library)
     user1 = User.get()
 
-    user1.manage_book_circulation("borrow", library, book_title="The hobbit")
-    user1.manage_book_circulation("borrow", library, book_title="The hobbit")
-    user1.manage_book_circulation("borrow", library, book_title="War and Peace")
+    library.add_user(user1)
+
+    library.manage_book_circulation("borrow", user1, book_title="The hobbit")
+    library.manage_book_circulation("borrow", user1, book_title="The hobbit")
+    library.manage_book_circulation("borrow", user1, book_title="War and Peace")
     print(user1)
-    user1.manage_book_circulation("return", library, book_title="the hobbit")
+    library.manage_book_circulation("return", user1, book_title="the hobbit")
     print(user1)
     #print(library)
 
