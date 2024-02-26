@@ -1,6 +1,5 @@
 import sys
 import csv
-import copy
 from book import Book, NullBook
 from library import Library
 from user import User
