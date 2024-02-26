@@ -26,7 +26,7 @@ class User:
         if self.borrowed_books:
             borrowed_list = [str(book) for book in self.borrowed_books]
             return f"{self.name} borrowed the book(s) {', '.join(borrowed_list)}."
-        return f"{self.name} has yet to borrow a book"
+        return f'{self.name} has yet to borrow a book'
     
     @classmethod
     def get(cls):
@@ -35,7 +35,7 @@ class User:
 
         @return: A User instance with the provided name.
         """
-        name = input("What's your name? ")
+        name = input("What's your name? ").capitalize()
         return cls(name)
 
     @property
@@ -57,4 +57,6 @@ class User:
             raise ValueError("Missing name")
         self._name = name
 
+    def __eq__(self, other) -> bool:
+        return self.name.lower() == other.name.lower()
     

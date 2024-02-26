@@ -1,6 +1,7 @@
 import sys
 import csv
-from book import Book
+import copy
+from book import Book, NullBook
 from library import Library
 from user import User
 
@@ -9,18 +10,90 @@ def main():
     books = data_extraction(sys.argv[1])
     library = Library()
     library.add_books(books)
-    #print(library)
-    user1 = User.get()
+    user_actif = User.get()
+    library.add_user(user_actif) 
 
-    library.add_user(user1)
 
-    library.manage_book_circulation("borrow", user1, book_title="The hobbit")
-    library.manage_book_circulation("borrow", user1, book_title="The hobbit")
-    library.manage_book_circulation("borrow", user1, book_title="War and Peace")
-    print(user1)
-    library.manage_book_circulation("return", user1, book_title="the hobbit")
-    print(user1)
-    #print(library)
+    while True:
+        # Display the menu of options
+        print(f"\n{user_actif.name}, Welcome to the Library")
+        print("1. Add a book")
+        print("2. Remove a book")
+        print("3. Borrow a book")
+        print("4. Return a book")
+        print("5. Display available books")
+        print("6. Change user")
+        print("7. See the books borrowed")
+        print("8. Exit")
+        choice = input("Enter the number of your choice: ")
+
+        if choice == "1":
+            # Add a book
+            title = input("Book title: ")
+            author = input("Book author: ")
+            library.add_book(Book(title, author, "Available"))
+            print("Book added successfully.")
+
+        elif choice == "2":
+            # Remove a book
+            title = input("Title of the book to remove: ")
+            book = library.find_book_by_title(title)
+            if isinstance(book, NullBook):
+                print("Book not found.")
+            else:
+                if not book.is_available():
+                    for user in library.users:
+                        if book in user.borrowed_books:
+                            library.manage_book_circulation("return", user, book)
+                            print(f"{book} is being deleted of the library. {user.name} doesn't have to return it.")
+                            break
+                library.delete_book(book)
+                print("Book removed successfully.")
+
+        elif choice == "3":
+            # Borrow a book
+            title = input("Title of the book to borrow: ")
+            try:
+                library.manage_book_circulation("borrow", user_actif, book_title= title)
+            except ValueError:
+                print("The book does not exist or is missing. Please try again.")
+
+        elif choice == "4":
+            # Return a book
+            title = input("Title of the book to return: ")
+            try:
+                library.manage_book_circulation("return", user_actif, book_title= title)
+            except ValueError:
+                print("The book does not exist or is missing. Please try again.")
+
+        elif choice == "5":
+            # Display available books
+            print(f"\n{library}")
+
+        elif choice == "6":
+            new_user = User.get()
+            if new_user is None:
+                print("The name has not been correctly added")
+            elif new_user in library.users:
+                index = library.users.index(new_user)
+                user_actif = library.users[index]
+                print(f"{user_actif.name}, Welcome back to the Library.")
+            else:
+                library.add_user(new_user)  
+                user_actif = new_user
+                print("New account created. You can now borrow books")
+            print(library.get_user_list())
+        elif choice == "7":
+            print(user_actif)
+
+        elif choice == "8":
+            # Exit
+            print("Thank you for using the library. See you soon!")
+            break
+
+        else:
+            print("Invalid choice, please try again.")
+    
 
 
 

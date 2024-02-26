@@ -23,6 +23,10 @@ class Library:
         books_available = [str(book) for book in self.books if book.is_available()]
         return f"The available books are : {',\n'.join(books_available)}"
     
+    def get_user_list(self):
+        existent_user = [str(user) for user in self.users]
+        return f"The users are : {existent_user}"
+
     def add_user(self, user: User) -> None:
         """
         Adds a new user to the library's user list, ensuring that each user is unique.
