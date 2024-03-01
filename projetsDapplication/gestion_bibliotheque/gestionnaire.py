@@ -4,14 +4,14 @@ from book import Book, NullBook
 from library import Library
 from user import User
 
+
 def main():
     check_arg(sys.argv)
     books = data_extraction(sys.argv[1])
     library = Library()
     library.add_books(books)
     user_actif = User.get()
-    library.add_user(user_actif) 
-
+    library.add_user(user_actif)
 
     while True:
         # Display the menu of options
@@ -44,7 +44,7 @@ def main():
             # Borrow a book
             title = input("Title of the book to borrow: ")
             try:
-                library.manage_book_circulation("borrow", user_actif, book_title= title)
+                library.manage_book_circulation("borrow", user_actif, book_title=title)
             except ValueError:
                 print("The book does not exist or is missing. Please try again.")
 
@@ -52,7 +52,7 @@ def main():
             # Return a book
             title = input("Title of the book to return: ")
             try:
-                library.manage_book_circulation("return", user_actif, book_title= title)
+                library.manage_book_circulation("return", user_actif, book_title=title)
             except ValueError:
                 print("The book does not exist or is missing. Please try again.")
 
@@ -69,7 +69,7 @@ def main():
                 user_actif = library.users[index]
                 print(f"{user_actif.name}, Welcome back to the Library.")
             else:
-                library.add_user(new_user)  
+                library.add_user(new_user)
                 user_actif = new_user
                 print("New account created. You can now borrow books")
         elif choice == "7":
@@ -82,8 +82,6 @@ def main():
 
         else:
             print("Invalid choice, please try again.")
-    
-
 
 
 def data_extraction(file_path):
@@ -102,12 +100,15 @@ def data_extraction(file_path):
     except FileNotFoundError:
         raise FileNotFoundError(f"Error: The file '{file_path}' was not found")
     except PermissionError:
-        raise PermissionError(f"Error: Permission denied to read the file '{file_path}'.")
+        raise PermissionError(
+            f"Error: Permission denied to read the file '{file_path}'."
+        )
     except Exception as e:
         raise Exception(f"An unexpected error occurred: {e}")
     else:
         return data
-    
+
+
 def check_arg(argv):
     """
     Checks if the correct number of command-line arguments has been passed.
@@ -117,7 +118,7 @@ def check_arg(argv):
     """
     if len(argv) != 2:
         raise ValueError("Put the name of the data file in arguments")
-    
+
 
 if __name__ == "__main__":
     main()

@@ -6,6 +6,7 @@ class Book:
     @ivar author: The author of the book.
     @ivar status: The current status of the book (default is 'Available').
     """
+
     def __init__(self, title: str, author: str, status="Available") -> None:
         """
         Initializes a new Book instance.
@@ -17,7 +18,7 @@ class Book:
         self.title = title
         self.author = author
         self.status = status
-    
+
     def __str__(self) -> str:
         """
         Returns a string representation of the book.
@@ -25,7 +26,7 @@ class Book:
         @return: String describing the book title and author.
         """
         return f"{self.title} written by {self.author}"
-    
+
     @classmethod
     def get(cls):
         """
@@ -54,7 +55,7 @@ class Book:
         if not title:
             raise ValueError("Missing title")
         self._title = title.strip().capitalize()
-    
+
     @property
     def author(self):
         """The author property."""
@@ -88,7 +89,9 @@ class Book:
         if not status:
             raise ValueError("Missing status")
         if status.strip().capitalize() not in ["Available", "Borrowed"]:
-            raise ValueError("The status is  not valid, have to be 'Available' or 'Borrowed'")
+            raise ValueError(
+                "The status is  not valid, have to be 'Available' or 'Borrowed'"
+            )
         self._status = status.strip().capitalize()
 
     def is_available(self) -> bool:
@@ -97,10 +100,8 @@ class Book:
 
         @return: True if the book is available, False otherwise.
         """
-        if self.status == "Available":
-            return True
-        return False
-    
+        return self.status == "Available"
+
     def change_status(self):
         """
         Change the status of a book.
@@ -125,16 +126,18 @@ class Book:
         if not isinstance(other, Book):
             # Return NotImplemented when the comparison is with an unsupported object type.
             return NotImplemented
-        
+
         title = (self.title or "").lower() == (other.title or "").lower()
         author = (self.author or "").lower() == (other.author or "").lower()
-        
+
         return title and author
+
 
 class NullBook(Book):
     """
     Represents a null object pattern for a Book. Used when a search fails to find a book.
     """
+
     def __init__(self):
         """
         Initializes a NullBook instance with default values.
@@ -148,7 +151,7 @@ class NullBook(Book):
         @return: False, indicating the book is not available.
         """
         return False
-    
+
     def __str__(self) -> str:
         """
         Returns a string indicating the book does not exist.
@@ -156,5 +159,3 @@ class NullBook(Book):
         @return: A string message about the non-existence of the book.
         """
         return "This book does not exist."
-    
-    

@@ -1,12 +1,14 @@
 from book import Book, NullBook
 from user import User
 
+
 class Library:
     """
     A class to represent a library containing a collection of books.
-    
+
     @ivar books: A list of Book objects representing the books in the library.
     """
+
     def __init__(self) -> None:
         """
         Initializes a new Library instance with an empty list of books.
@@ -22,7 +24,7 @@ class Library:
         """
         books_available = [str(book) for book in self.books if book.is_available()]
         return f"The available books are : {',\n'.join(books_available)}"
-    
+
     def get_user_list(self):
         existent_user = [str(user) for user in self.users]
         return f"The users are : {existent_user}"
@@ -52,21 +54,21 @@ class Library:
             self.books.append(book)
         else:
             raise ValueError("Missing book")
-        
-    def add_books(self, book_list: list[dict]):
-            """
-            Adds multiple books to the library collection from a list of book dictionaries.
 
-            @param book_list: A list of dictionaries, each representing a book to add.
-            @raise ValueError: If the list of books is empty.
-            """
-            if book_list:
-                for book in book_list:
-                    self.add_book(Book(book["Title"], book["Author"], book["Statut"]))
-                print(f"The {len(book_list)} books have been added in the library")
-            else:
-                raise ValueError("The list of book is empty")
-        
+    def add_books(self, book_list: list[dict]):
+        """
+        Adds multiple books to the library collection from a list of book dictionaries.
+
+        @param book_list: A list of dictionaries, each representing a book to add.
+        @raise ValueError: If the list of books is empty.
+        """
+        if book_list:
+            for book in book_list:
+                self.add_book(Book(book["Title"], book["Author"], book["Statut"]))
+            print(f"The {len(book_list)} books have been added in the library")
+        else:
+            raise ValueError("The list of book is empty")
+
     def delete_book(self, book: Book):
         """
         Removes a book from the library collection.
@@ -75,25 +77,29 @@ class Library:
         @raise ValueError: If the book does not exist in the library.
         """
         if isinstance(book, NullBook) or book is None:
-                print("Book not found.")
+            print("Book not found.")
 
         if not book.is_available():
-                    for user in self.users:
-                        if book in user.borrowed_books:
-                            self.manage_book_circulation("return", user, book)
-                            print(f"{book} is being deleted of the library. {user.name} doesn't have to return it.")
-                            break
+            for user in self.users:
+                if book in user.borrowed_books:
+                    self.manage_book_circulation("return", user, book)
+                    print(
+                        f"{book} is being deleted of the library. {user.name} doesn't have to return it."
+                    )
+                    break
         try:
             self.books.remove(book)
         except ValueError:
             raise ValueError(f"{book} does not exist in the library")
-      
-    def manage_book_circulation(self, operation_type:str, user: User, book : Book= None, book_title: str= "") -> None:
+
+    def manage_book_circulation(
+        self, operation_type: str, user: User, book: Book = None, book_title: str = ""
+    ) -> None:
         """
         Manages the circulation of books within the library, allowing users to borrow or return books.
 
-        This method simplifies the process of borrowing and returning books by encapsulating the logic 
-        required to check the availability of a book, update its status, and maintain the user's list of 
+        This method simplifies the process of borrowing and returning books by encapsulating the logic
+        required to check the availability of a book, update its status, and maintain the user's list of
         borrowed books. It supports operations based on either a Book object or a book title.
 
         @param operation_type: Specifies the operation to be performed. Valid options are "borrow" or "return".
@@ -119,11 +125,13 @@ class Library:
         """
         if not user:
             raise ValueError("Missing user")
-        
+
         if user not in self.users:
-            print("Register the user in the library to be able to borrow or return a book")
+            print(
+                "Register the user in the library to be able to borrow or return a book"
+            )
             return
-        
+
         if book_title and not book:
             book = self.find_book_by_title(book_title)
 
@@ -149,12 +157,14 @@ class Library:
             return True
 
         if operation_type.lower() == "borrow":
-            borrow_book()                
+            borrow_book()
         elif operation_type.lower() == "return":
-            return_book()    
+            return_book()
         else:
-            raise ValueError("Invalid operation type. Please specify 'borrow' or 'return'.")
-        
+            raise ValueError(
+                "Invalid operation type. Please specify 'borrow' or 'return'."
+            )
+
     def find_book_by_title(self, title: str) -> Book:
         """
         Searches for a book by its title.
@@ -165,7 +175,5 @@ class Library:
         for book in self.books:
             if book.title.lower() == title.lower():
                 return book
-        
-        return NullBook()
 
-    
+        return NullBook()
