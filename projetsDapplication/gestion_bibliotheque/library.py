@@ -137,6 +137,9 @@ class Library:
 
         if book is None or isinstance(book, NullBook) or book not in self.books:
             raise ValueError("The book provided is not valid or hasn't been found.")
+        
+        if book not in user.borrowed_books and operation_type.lower() == "return":
+            raise ValueError("The book is not borrowed by the actual user.")
 
         def borrow_book():
             if not book.is_available():
